@@ -1,1 +1,4 @@
-
+[core]
+    remote = image_colorizer_remote
+['remote "image_colorizer_remote"']
+    url = webdavs://webdav.yandex.ru/client/disk/dvc_storage/image_colorizer
