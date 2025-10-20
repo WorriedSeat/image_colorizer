@@ -2,3 +2,5 @@
     remote = image_colorizer_remote
 ['remote "image_colorizer_remote"']
     url = webdavs://webdav.yandex.ru/client/disk/dvc_storage/image_colorizer
+    user = ""
+    password = y0__xDk2_GuBRiThTsgyKrI5hSWoFWFk79b2jzyiWugz2JJ2FXVJQ
