@@ -1,0 +1,4 @@
+[core]
+    remote = image_colorizer_remote
+['remote "image_colorizer_remote"']
+    url = gdrive://1Ru4RNuXNYV9lNvrpzmk6ZbRwo3qxKvew
