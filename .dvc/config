@@ -1,0 +1,5 @@
+[core]
+    remote = image_colorizer_remote
+['remote "image_colorizer_remote"']
+    url = s3://image-colorizer
+    endpointurl = https://storage.yandexcloud.net
