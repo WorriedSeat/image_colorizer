@@ -82,7 +82,6 @@ class Data_processor():
                     zip_ref.extractall('.')
     
     def create_prep_rgb(self):
-        
         #Moving to root
         move_to_root(display=False)
         
@@ -133,35 +132,52 @@ class Data_processor():
                 })
         
         print("Data preprocessed finished in data/prep/EuroSAT_RGB")
-        
-    def execute_data_pipeline(self, save_zip:bool=True, save_raw:bool=True):       
-        self.download_zip()
-        self.unzip()
-        self.create_prep_rgb()
-        
+    
+    def remove_zip(self):
         self._move_to_raw()
-        if not save_zip:
-            for data_format in self.datasets_info.keys():
-                zip_file = self.datasets_info[data_format][1]
-                zip_file = f"{zip_file}.zip"
-                if os.path.exists(zip_file):
-                    os.remove(zip_file)
-                    print(f"Removed {zip_file}")
-        if not save_raw:
-            for data_format in self.datasets_info.keys():
-                folder_name = self.datasets_info[data_format][1]
-                if os.path.exists(folder_name):
-                    shutil.rmtree(folder_name)
-                    print(f"Removed raw {folder_name}")
+        for data_format in self.datasets_info.keys():
+            zip_file = self.datasets_info[data_format][1]
+            zip_file = f"{zip_file}.zip"
+            if os.path.exists(zip_file):
+                os.remove(zip_file)
+                print(f"Removed {zip_file}")
+                
+    def remove_raw(self):
+        self._move_to_raw()
+        for data_format in self.datasets_info.keys():
+            folder_name = self.datasets_info[data_format][1]
+            if os.path.exists(folder_name):
+                shutil.rmtree(folder_name)
+                print(f"Removed raw {folder_name}")
                     
 if __name__ == '__main__':
     
-    # Argument parser to parse savings of the data pipeline execution
+    # Main parser of the file
     parser = argparse.ArgumentParser()
-    parser.add_argument('--save_zip', type=bool, default=False)
-    parser.add_argument('--save_raw', type=bool, default=False)
+    subparsers = parser.add_subparsers(dest='command')
+    
+    #subparser of download
+    download_parser = subparsers.add_parser('download')
+    
+    #subparser of unzip
+    unzip_parser = subparsers.add_parser('unzip')
+    unzip_parser.add_argument('--remove_zip', action='store_true')
+    
+    #subparser of preprocessing
+    prep_parser = subparsers.add_parser('prep')
+    prep_parser.add_argument('--remove_raw', action='store_true')
     
     args = parser.parse_args()
     
-    downloader = Data_processor()
-    downloader.execute_data_pipeline(save_zip=args.save_zip, save_raw=args.save_raw)
+    data_processor = Data_processor()
+    
+    if args.command == 'download':
+        data_processor.download_zip()
+    elif args.command == 'unzip':
+        data_processor.unzip()
+        if args.remove_zip:
+            data_processor.remove_zip()
+    elif args.command == 'prep':
+        data_processor.create_prep_rgb()
+        if args.remove_raw:
+            data_processor.remove_raw()
