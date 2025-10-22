@@ -3,6 +3,7 @@ import requests
 import zipfile
 import random
 import csv
+import argparse
 from tqdm import tqdm
 from typing import Literal, List
 import shutil
@@ -133,7 +134,7 @@ class Data_processor():
         
         print("Data preprocessed finished in data/prep/EuroSAT_RGB")
         
-    def execute_data_pipeline(self, save_zip:bool=True, save_raw:bool=True):
+    def execute_data_pipeline(self, save_zip:bool=True, save_raw:bool=True):       
         self.download_zip()
         self.unzip()
         self.create_prep_rgb()
@@ -154,5 +155,13 @@ class Data_processor():
                     print(f"Removed raw {folder_name}")
                     
 if __name__ == '__main__':
+    
+    # Argument parser to parse savings of the data pipeline execution
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--save_zip', type=bool, default=False)
+    parser.add_argument('--save_raw', type=bool, default=False)
+    
+    args = parser.parse_args()
+    
     downloader = Data_processor()
-    downloader.execute_data_pipeline(save_zip=False, save_raw=False)
+    downloader.execute_data_pipeline(save_zip=args.save_zip, save_raw=args.save_raw)
