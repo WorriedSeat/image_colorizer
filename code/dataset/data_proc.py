@@ -7,6 +7,7 @@ import argparse
 from tqdm import tqdm
 from typing import Literal, List
 import shutil
+from omegaconf import OmegaConf
 
 def move_to_root(display:bool):
     path = os.getcwd().split('/')[::-1]
@@ -154,20 +155,25 @@ if __name__ == '__main__':
     
     # Main parser of the file
     parser = argparse.ArgumentParser()
+    
     subparsers = parser.add_subparsers(dest='command')
+    download_parser = subparsers.add_parser('download') #subparser of download
+    unzip_parser = subparsers.add_parser('unzip')       #subparser of unzip
+    prep_parser = subparsers.add_parser('prep')         #subparser of preprocessing
+    cleanup_parser = subparsers.add_parser('cleanup')   #subparser of cleaning up
     
-    #subparser of download
-    download_parser = subparsers.add_parser('download')
-    
-    #subparser of unzip
-    unzip_parser = subparsers.add_parser('unzip')
-    unzip_parser.add_argument('--remove_zip', action='store_true')
-    
-    #subparser of preprocessing
-    prep_parser = subparsers.add_parser('prep')
-    prep_parser.add_argument('--remove_raw', action='store_true')
-    
+    #getting arguments from argparser
     args = parser.parse_args()
+    
+    #reading parameters from params.yml
+    try:
+        params = OmegaConf.load('params.yaml')
+        remove_zip = params.data_pipeline.get('remove_zip', False)
+        remove_raw = params.data_pipeline.get('remove_raw', False)
+    except FileNotFoundError:
+        print("params.yaml not found, using remove_zip=remove_raw=False")
+        remove_zip = False
+        remove_raw = False
     
     data_processor = Data_processor()
     
@@ -175,9 +181,11 @@ if __name__ == '__main__':
         data_processor.download_zip()
     elif args.command == 'unzip':
         data_processor.unzip()
-        if args.remove_zip:
-            data_processor.remove_zip()
     elif args.command == 'prep':
         data_processor.create_prep_rgb()
-        if args.remove_raw:
+    elif args.command == 'cleanup':
+        if remove_zip:
+            data_processor.remove_zip()
+        if remove_raw:
             data_processor.remove_raw()
+    
