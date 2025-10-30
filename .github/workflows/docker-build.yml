@@ -5,7 +5,9 @@ on:
   push:
     paths:
       - 'code/**'  # Триггер только на изменения в ./code и подпапках
+  workflow_dispatch:
 
+  
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
