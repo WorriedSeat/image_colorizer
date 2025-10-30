@@ -1,0 +1,3 @@
+data_pipeline:
+  remove_zip: True
+  remove_raw: True
