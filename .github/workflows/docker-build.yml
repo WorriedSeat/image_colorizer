@@ -63,12 +63,12 @@ jobs:
       - name: Run Docker Compose for testing
         run: |
           cd code/deployment
-          docker-compose up --build -d
+          docker-compose pull
+          docker-compose up -d
           # Ждём запуска (пример: 30 сек, подстрой под свои сервисы)
           sleep 30
           # Тест доступности (пример: curl на порты)
           docker run --rm --network container:myapp-container appropriate/curl -s --retry 5 http://localhost:5000 || echo "App test failed"
           docker run --rm --network container:myapi-container appropriate/curl -s --retry 5 http://localhost:8000 || echo "API test failed"
           # Остановка
-          docker-compose down
-        working-directory: ${{ github.workspace }}
+          docker-compose down -v

@@ -9,6 +9,8 @@ services:
       - "8501:8501"
     container_name: streamlit
     restart: unless-stopped
+    depends_on:
+      - api
 
   api:
     build:
