@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  app:
+    image: ghcr.io/${{ github.repository }}/app:latest
+    ports:
+      - "8501:8501"
+    container_name: streamlit
+    restart: unless-stopped
+
+  api:
+    image: ghcr.io/${{ github.repository }}/api:latest
+    ports:
+      - "8000:8000"
+    container_name: fastapi
+    restart: unless-stopped
