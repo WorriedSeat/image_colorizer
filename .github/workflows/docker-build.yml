@@ -51,11 +51,11 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # 6. Set up Docker Compose
-      - name: Set up Docker Compose
-        uses: docker/setup-compose-action@v3
-        with:
-          docker-compose-version: 'v2.29.1'  # Актуальная версия
+      # # 6. Set up Docker Compose
+      # - name: Set up Docker Compose
+      #   uses: docker/setup-compose-action@v3
+      #   with:
+      #     docker-compose-version: 'v2.29.1'  # Актуальная версия
 
       # 7. Запуск compose для теста (build + up, затем down)
       - name: Run Docker Compose for testing
