@@ -36,8 +36,8 @@ jobs:
           context: ./code/deployment/app
           push: true
           tags: |
-            ghcr.io/${{ lowercase(github.repository) }}/app:${{ github.sha }}
-            ghcr.io/${{ lowercase(github.repository) }}/app:latest
+            ${{ format('ghcr.io/{0}/app:{1}', toLowerCase(github.repository), github.sha) }}
+            ${{ format('ghcr.io/{0}/app:latest', toLowerCase(github.repository)) }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -48,8 +48,8 @@ jobs:
           context: ./code/deployment/api
           push: true
           tags: |
-            ghcr.io/${{ lowercase(github.repository) }}/api:${{ github.sha }}
-            ghcr.io/${{ lowercase(github.repository) }}/api:latest
+            ${{ format('ghcr.io/{0}/api:{1}', toLowerCase(github.repository), github.sha) }}
+            ${{ format('ghcr.io/{0}/api:latest', toLowerCase(github.repository)) }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
