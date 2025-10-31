@@ -37,7 +37,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./code/deployment/app
-          dockerfile: Dockerfile.streamlit
           push: true
           tags: |
             ${{ format('ghcr.io/{0}/app:{1}', env.LOWERCASE_REPO, github.sha) }}
@@ -50,7 +49,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./code/deployment/api
-          dockerfile: Dockerfile.fastapi
           push: true
           tags: |
             ${{ format('ghcr.io/{0}/api:{1}', env.LOWERCASE_REPO, github.sha) }}

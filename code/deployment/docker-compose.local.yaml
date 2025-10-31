@@ -4,18 +4,18 @@ services:
   app:
     build:
       context: ./app
-      dockerfile: Dockerfile.streamlit
+      dockerfile: Dockerfile
+
     ports:
       - "8501:8501"
     container_name: streamlit
     restart: unless-stopped
-    depends_on:
-      - api
+    
 
   api:
     build:
       context: ./api
-      dockerfile: Dockerfile.fastapi
+      dockerfile: Dockerfile
       
     ports:
       - "8000:8000"
