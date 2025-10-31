@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: ghcr.io/${{ github.repository }}/app:latest
+    image: ghcr.io/worriedseat/image_colorizer/app:latest
     ports:
       - "8501:8501"
     container_name: streamlit
@@ -11,7 +11,7 @@ services:
       - api
 
   api:
-    image: ghcr.io/${{ github.repository }}/api:latest
+    image: ghcr.io/worriedseat/image_colorizer/api:latest
     ports:
       - "8000:8000"
     container_name: fastapi
@@ -22,4 +22,3 @@ services:
 
 
 
-    
