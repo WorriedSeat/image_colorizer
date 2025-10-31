@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      LOWERCASE_REPO: ${{ github.repository | toLowerCase() }}
+      LOWERCASE_REPO: worriedseat/image_colorizer
 
     steps:
       # 1. Checkout репозитория
