@@ -12,6 +12,15 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    LOWERCASE_REPO: >-
+        ${{ replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
+        replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
+        replace(replace(replace(replace(replace(replace(
+        github.repository,
+        'A', 'a'), 'B', 'b'), 'C', 'c'), 'D', 'd'), 'E', 'e'), 'F', 'f'), 'G', 'g'), 'H', 'h'), 'I', 'i'), 'J', 'j'),
+        'K', 'k'), 'L', 'l'), 'M', 'm'), 'N', 'n'), 'O', 'o'), 'P', 'p'), 'Q', 'q'), 'R', 'r'), 'S', 's'), 'T', 't'),
+        'U', 'u'), 'V', 'v'), 'W', 'w'), 'X', 'x'), 'Y', 'y'), 'Z', 'z') }}
+
     steps:
       # 1. Checkout репозитория
       - name: Checkout code
@@ -36,8 +45,8 @@ jobs:
           context: ./code/deployment/app
           push: true
           tags: |
-            ${{ format('ghcr.io/{0}/app:{1}', toLowerCase(github.repository), github.sha) }}
-            ${{ format('ghcr.io/{0}/app:latest', toLowerCase(github.repository)) }}
+            ${{ format('ghcr.io/{0}/app:{1}', LOWERCASE_REPO, github.sha) }}
+            ${{ format('ghcr.io/{0}/app:latest', LOWERCASE_REPO) }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -48,8 +57,8 @@ jobs:
           context: ./code/deployment/api
           push: true
           tags: |
-            ${{ format('ghcr.io/{0}/api:{1}', toLowerCase(github.repository), github.sha) }}
-            ${{ format('ghcr.io/{0}/api:latest', toLowerCase(github.repository)) }}
+            ${{ format('ghcr.io/{0}/api:{1}', LOWERCASE_REPO, github.sha) }}
+            ${{ format('ghcr.io/{0}/api:latest', LOWERCASE_REPO) }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
