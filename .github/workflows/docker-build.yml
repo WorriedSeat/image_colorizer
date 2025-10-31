@@ -11,8 +11,8 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
-    LOWERCASE_REPO: >-
+    env:
+      LOWERCASE_REPO: >-
         ${{ replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
         replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
         replace(replace(replace(replace(replace(replace(
