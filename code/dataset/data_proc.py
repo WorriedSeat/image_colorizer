@@ -9,7 +9,6 @@ from typing import Literal, List
 import shutil
 from omegaconf import OmegaConf
 
-#check the work of the git workflow2
 
 def move_to_root(display:bool):
     path = os.getcwd().split('/')[::-1]
