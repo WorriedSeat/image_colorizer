@@ -12,6 +12,10 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read   # Для чтения кода (обычно уже есть)
+      packages: write  # ← Ключевой: для создания/записи в GHCR
+
     env:
       LOWERCASE_REPO: worriedseat/image_colorizer
 
