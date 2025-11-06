@@ -9,6 +9,7 @@ from typing import Literal, List
 import shutil
 from omegaconf import OmegaConf
 
+
 def move_to_root(display:bool):
     path = os.getcwd().split('/')[::-1]
     if 'image_colorizer' in path:
