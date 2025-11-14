@@ -11,3 +11,7 @@ opencv-python
 pillow 
 requests 
 tqdm
+mlflow
+scikit-image
+dvc
+dvc_s3
