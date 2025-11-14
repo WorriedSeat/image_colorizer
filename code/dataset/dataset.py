@@ -30,13 +30,14 @@ class EuroSATLabDataset(Dataset):
         return L, ab
 
 #Function that use dataset class and creates data loaders
-def get_dataloaders(path: str='data/prep/EuroSAT_RGB/images', batch_size:int=32, train_part:float=0.8):
+def get_dataloaders(path: str='data/prep/EuroSAT_RGB/images', batch_size:int=32, train_part:float=0.8, seed:int=69):
     dataset = EuroSATLabDataset(path)
 
     # Split on train and test
     train_size = int(train_part * len(dataset))
     val_size = len(dataset) - train_size
-    train_ds, val_ds = random_split(dataset, [train_size, val_size])
+    generator = torch.Generator().manual_seed(seed)
+    train_ds, val_ds = random_split(dataset, [train_size, val_size], generator)
 
     train_loader = DataLoader(train_ds, batch_size=32, shuffle=True, num_workers=2)
     val_loader = DataLoader(val_ds, batch_size=32, shuffle=False, num_workers=2)
