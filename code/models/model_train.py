@@ -3,8 +3,17 @@ import torch.optim as optim
 from tqdm import tqdm
 import torch.nn as nn
 import dagshub
+dagshub.init(repo_owner='worriedseat',
+             repo_name='image_colorizer',
+             mlflow=True)
+
 import mlflow
+with mlflow.start_run():
+  mlflow.log_param('parameter name', 'value')
+  mlflow.log_metric('metric name', 1)
 import mlflow.pytorch
+
+
 
 from code.dataset.dataset import get_dataloaders
 from code.models.losses import validate, lab_to_rgb_tensor, VGGPerceptual
