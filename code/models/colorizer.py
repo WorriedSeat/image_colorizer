@@ -2,8 +2,6 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torchvision.models as models
-from skimage import color
-from typing import Literal
 
 #As encoder part of the model we use pretrained ResNet34
 class EncoderResNet34(nn.Module):

@@ -18,6 +18,7 @@ def train(tracking_uri:str, lr:float=1e-3, epochs:int=30, batch_size:int=32, max
     #Setting the device
     device = torch.device('cuda' if torch.cuda.is_available else 'cpu')
     
+    
     with mlflow.start_run():
         #logging parameters
         mlflow.log_params({
@@ -32,7 +33,7 @@ def train(tracking_uri:str, lr:float=1e-3, epochs:int=30, batch_size:int=32, max
     
         train_loader, val_loader = get_dataloaders(batch_size=batch_size, seed=seed) # get data loaders
         
-        model = ColorizerNet() #Creating a model
+        model = ColorizerNet().to(device) #Creating a model
         optimizer = optim.Adam(model.parameters(), lr=lr) #Adam optimizer
         l1_loss = nn.L1Loss() #L1 loss
         perc_loss = VGGPerceptual(device) #VGG preceptual loss
