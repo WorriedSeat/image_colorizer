@@ -2,6 +2,7 @@ import torch
 import torch.optim as optim
 from tqdm import tqdm
 import torch.nn as nn
+import dagshub
 import mlflow
 import mlflow.pytorch
 
@@ -10,6 +11,10 @@ from code.models.losses import validate, lab_to_rgb_tensor, VGGPerceptual
 from code.models.colorizer import ColorizerNet
 
 def train(tracking_uri:str, lr:float=1e-3, epochs:int=30, batch_size:int=32, max_patience:int=10, seed:int=69, best_model_pth:str='models/best.pt'):
+    
+    dagshub.init(repo_owner='worriedseat',
+             repo_name='image_colorizer',
+             mlflow=True)
     
     #Configuring mlflow
     mlflow.set_tracking_uri(tracking_uri)
@@ -104,4 +109,4 @@ def train(tracking_uri:str, lr:float=1e-3, epochs:int=30, batch_size:int=32, max
     return model
 
 if __name__ == "__main__":
-    train(tracking_uri='file:./mlruns')
+    train(tracking_uri='"https://dagshub.com/WorriedSeat/image_colorizer.mlflow"')
