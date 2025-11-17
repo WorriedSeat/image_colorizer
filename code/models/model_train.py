@@ -100,7 +100,7 @@ def train(tracking_uri:str, lr:float=1e-3, epochs:int=30, batch_size:int=32, max
 
                 #logging best model
                 mlflow.log_artifact(best_model_pth, artifact_path="models_paths")
-                mlflow.pytorch.log_model(model, artifact_path="best_model", input_example=L[:1])
+                # mlflow.pytorch.log_model(model, name="best_model", input_example=L[:1]) Since it's not supported by dagshub
                 
             if patience >= max_patience:
                 print(f"{'='*50}\nEarly stopping was triggered after {max_patience} epochs:\n\tBest validation loss: {val_loss:.4f} (L1: {val_l1:.4f}, Perc: {val_perc:.4f})\n\tBest model saved to {best_model_pth}!")
