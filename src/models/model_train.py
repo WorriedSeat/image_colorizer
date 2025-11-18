@@ -1,12 +1,12 @@
-# import os
-# import torch
-# import torch.optim as optim
-# import torch.nn as nn
-# import dagshub
-# import mlflow
-# import mlflow.pytorch
-# from tqdm import tqdm
-# from dotenv import load_dotenv
+import os
+import torch
+import torch.optim as optim
+import torch.nn as nn
+import dagshub
+import mlflow
+import mlflow.pytorch
+from tqdm import tqdm
+from dotenv import load_dotenv
 
 from src.dataset.dataset import get_dataloaders
 from src.models.losses import validate, lab_to_rgb_tensor, VGGPerceptual
@@ -112,9 +112,8 @@ def train(tracking_uri:str, lr:float=1e-3, epochs:int=30, batch_size:int=32, max
     return model
 
 if __name__ == "__main__":
-    # load_dotenv()
-    # os.environ['MLFLOW_TRACKING_PASSWORD'] = os.getenv('DAGSHUB_TOKEN')
-    # os.environ['MLFLOW_TRACKING_USERNAME'] = os.getenv('DAGSHUB_USERNAME')
+    load_dotenv()
+    os.environ['MLFLOW_TRACKING_PASSWORD'] = os.getenv('DAGSHUB_TOKEN')
+    os.environ['MLFLOW_TRACKING_USERNAME'] = os.getenv('DAGSHUB_USERNAME')
     
-    # train(tracking_uri="https://dagshub.com/WorriedSeat/image_colorizer.mlflow")
-    print('only')
+    train(tracking_uri="https://dagshub.com/WorriedSeat/image_colorizer.mlflow")
