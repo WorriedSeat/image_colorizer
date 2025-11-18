@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+
+    ports:
+      - "8501:8501"
+    container_name: streamlit
+    restart: unless-stopped
+    
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      
+    ports:
+      - "8000:8000"
+    container_name: fastapi
+    restart: unless-stopped
