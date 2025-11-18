@@ -12,6 +12,8 @@ from src.dataset.dataset import get_dataloaders
 from src.models.losses import validate, lab_to_rgb_tensor, VGGPerceptual
 from src.models.colorizer import ColorizerNet
 
+#check the performance of the workflow with changed paths
+
 def train(tracking_uri:str, lr:float=1e-3, epochs:int=30, batch_size:int=32, max_patience:int=10, seed:int=69, best_model_pth:str='models/best.pt'):
     
     #Initializing dagshub
