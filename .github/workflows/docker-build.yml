@@ -4,7 +4,7 @@ name: Docker Build & Compose on Code Push
 on:
   push:
     paths:
-      - 'code/**'  # Триггер только на изменения в ./code и подпапках
+      - 'src/**'  # Триггер только на изменения в ./code и подпапках
   workflow_dispatch:
 
   
@@ -40,7 +40,7 @@ jobs:
       - name: Build and push app image
         uses: docker/build-push-action@v6
         with:
-          context: ./code/deployment/app
+          context: ./src/deployment/app
           push: true
           tags: |
             ${{ format('ghcr.io/{0}/app:{1}', env.LOWERCASE_REPO, github.sha) }}
@@ -52,7 +52,7 @@ jobs:
       - name: Build and push api image
         uses: docker/build-push-action@v6
         with:
-          context: ./code/deployment/api
+          context: ./src/deployment/api
           push: true
           tags: |
             ${{ format('ghcr.io/{0}/api:{1}', env.LOWERCASE_REPO, github.sha) }}
@@ -63,7 +63,7 @@ jobs:
       # 6. Запуск compose для теста (build + up, затем down)
       - name: Run Docker Compose for testing
         run: |
-          cd code/deployment
+          cd src/deployment
           docker compose pull
           docker compose up -d
           # Ждём запуска (пример: 30 сек, подстрой под свои сервисы)
