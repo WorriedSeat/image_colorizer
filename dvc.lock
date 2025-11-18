@@ -5,8 +5,8 @@ stages:
     deps:
     - path: src/dataset/data_proc.py
       hash: md5
-      md5: ed87c7c6eff3b2a02b6b4f73f487ec50
-      size: 7691
+      md5: addd0ee717f93a0951964f6206faabb2
+      size: 7692
     outs:
     - path: data/raw/EuroSAT_RGB.zip
       hash: md5
@@ -15,14 +15,14 @@ stages:
   unzip:
     cmd: python3 src/dataset/data_proc.py unzip
     deps:
-    - path: src/dataset/data_proc.py
-      hash: md5
-      md5: ed87c7c6eff3b2a02b6b4f73f487ec50
-      size: 7691
     - path: data/raw/EuroSAT_RGB.zip
       hash: md5
       md5: f46e308c4d50d4bf32fedad2d3d62f3b
       size: 94658721
+    - path: src/dataset/data_proc.py
+      hash: md5
+      md5: addd0ee717f93a0951964f6206faabb2
+      size: 7692
     outs:
     - path: data/raw/EuroSAT_RGB
       hash: md5
@@ -32,19 +32,19 @@ stages:
   prep:
     cmd: python3 src/dataset/data_proc.py prep
     deps:
-    - path: src/dataset/data_proc.py
-      hash: md5
-      md5: ed87c7c6eff3b2a02b6b4f73f487ec50
-      size: 7691
     - path: data/raw/EuroSAT_RGB
       hash: md5
       md5: bff43f93e1bb7c85d1021434eb407e8a.dir
       size: 91844360
       nfiles: 27000
+    - path: src/dataset/data_proc.py
+      hash: md5
+      md5: addd0ee717f93a0951964f6206faabb2
+      size: 7692
     outs:
     - path: data/prep/EuroSAT_RGB/image_info.csv
       hash: md5
-      md5: f7e122dd7afd1a383b9b94abacde1be1
+      md5: 022ef6d53d251425a6cae1177bbf6361
       size: 2145396
     - path: data/prep/EuroSAT_RGB/images
       hash: md5
@@ -56,8 +56,8 @@ stages:
     deps:
     - path: src/dataset/data_proc.py
       hash: md5
-      md5: ed87c7c6eff3b2a02b6b4f73f487ec50
-      size: 7691
+      md5: addd0ee717f93a0951964f6206faabb2
+      size: 7692
     params:
       params.yaml:
         data_pipeline.remove_raw: true
