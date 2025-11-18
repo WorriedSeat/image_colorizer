@@ -1,29 +1,29 @@
 stages:
   download:
-    cmd: python3 code/dataset/data_proc.py download
+    cmd: python3 src/dataset/data_proc.py download
     deps:
-    - code/dataset/data_proc.py
+    - src/dataset/data_proc.py
     outs:
     - data/raw/EuroSAT_RGB.zip
   unzip:
-    cmd: python3 code/dataset/data_proc.py unzip
+    cmd: python3 src/dataset/data_proc.py unzip
     deps:
-    - code/dataset/data_proc.py
+    - src/dataset/data_proc.py
     - data/raw/EuroSAT_RGB.zip
     outs:
     - data/raw/EuroSAT_RGB
   prep:
-    cmd: python3 code/dataset/data_proc.py prep
+    cmd: python3 src/dataset/data_proc.py prep
     deps:
-    - code/dataset/data_proc.py
+    - src/dataset/data_proc.py
     - data/raw/EuroSAT_RGB
     outs:
     - data/prep/EuroSAT_RGB/image_info.csv
     - data/prep/EuroSAT_RGB/images
   cleanup:
-    cmd: python3 code/dataset/data_proc.py cleanup
+    cmd: python3 src/dataset/data_proc.py cleanup
     deps:
-    - code/dataset/data_proc.py
+    - src/dataset/data_proc.py
     params:
     - data_pipeline.remove_raw
     - data_pipeline.remove_zip
