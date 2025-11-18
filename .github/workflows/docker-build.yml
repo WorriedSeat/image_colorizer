@@ -1,10 +1,10 @@
 
-name: Docker Build & Compose on Code Push
+name: Docker Build & Compose on src Push
 
 on:
   push:
     paths:
-      - 'src/**'  # Триггер только на изменения в ./code и подпапках
+      - 'src/**'  # Триггер только на изменения в ./src и подпапках
   workflow_dispatch:
 
   
@@ -21,7 +21,7 @@ jobs:
 
     steps:
       # 1. Checkout репозитория
-      - name: Checkout code
+      - name: Checkout src
         uses: actions/checkout@v4
 
       # 2. Set up Docker Buildx (для multi-platform сборки, если нужно)
