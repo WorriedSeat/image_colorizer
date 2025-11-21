@@ -1,0 +1,1 @@
+docker compose -f ./src/deployment/docker-compose.local.yaml up

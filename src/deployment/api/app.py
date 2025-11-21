@@ -26,8 +26,8 @@ model.eval()  # set to evaluation mode
 to_tensor = transforms.ToTensor()
 
 @app.get("/health")
-def health():
-    return {"status": "ok"}
+async def health_check():
+    return {"status": "healthy", "model_loaded": True}
 
 @app.post("/colorize")
 async def colorize(file: UploadFile = File(...)):
@@ -66,3 +66,4 @@ async def colorize(file: UploadFile = File(...)):
     colorized_img.save(buf, format="PNG")
     buf.seek(0)
     return StreamingResponse(buf, media_type="image/png")
+    

@@ -1,23 +1,33 @@
-version: '3.8'
-
 services:
-  app:
-    build:
-      context: ./app
-      dockerfile: Dockerfile
-
-    ports:
-      - "8501:8501"
-    container_name: streamlit
-    restart: unless-stopped
-    
-
   api:
-    build:
-      context: ./api
-      dockerfile: Dockerfile
-      
+    image: colorize/api
+    container_name: model_api
     ports:
       - "8000:8000"
-    container_name: fastapi
-    restart: unless-stopped
+    volumes:
+      - ../../models:/app/models
+      - ../models:/app/src/models
+    networks:
+      - network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    environment:
+      - PYTHONPATH=/app
+
+  app:
+    image: colorize/web
+    container_name: web_app
+    ports:
+      - "8501:8501"
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge

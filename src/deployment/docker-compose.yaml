@@ -8,7 +8,10 @@ services:
     container_name: streamlit
     restart: unless-stopped
     depends_on:
-      - api
+      api:
+        condition: service_healthy
+    networks:
+      - network
 
   api:
     image: ghcr.io/worriedseat/image_colorizer/api:latest
@@ -16,3 +19,14 @@ services:
       - "8000:8000"
     container_name: fastapi
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge

@@ -3,7 +3,7 @@ from PIL import Image
 import requests
 import io
 
-FASTAPI_URL = "http://127.0.0.1:8000/colorize"
+FASTAPI_URL = "http://api:8000/colorize"
 
 st.set_page_config(page_title="Image Colorizer", layout="centered")
 st.title("Image Colorizer")
