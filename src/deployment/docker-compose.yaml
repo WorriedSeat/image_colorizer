@@ -1,18 +1,6 @@
 version: '3.8'
 
 services:
-  app:
-    image: ghcr.io/worriedseat/image_colorizer/app:latest
-    ports:
-      - "8501:8501"
-    container_name: streamlit
-    restart: unless-stopped
-    depends_on:
-      api:
-        condition: service_healthy
-    networks:
-      - network
-
   api:
     image: ghcr.io/worriedseat/image_colorizer/api:latest
     ports:
@@ -26,6 +14,21 @@ services:
       retries: 3
     networks:
       - network
+
+      
+  app:
+    image: ghcr.io/worriedseat/image_colorizer/app:latest
+    ports:
+      - "8501:8501"
+    container_name: streamlit
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - network
+
+  
 
 networks:
   network:

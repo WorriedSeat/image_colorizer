@@ -40,7 +40,7 @@ jobs:
       - name: Build and push app image
         uses: docker/build-push-action@v6
         with:
-          context: ./src/deployment/app
+          context: src/deployment/app
           push: true
           tags: |
             ${{ format('ghcr.io/{0}/app:{1}', env.LOWERCASE_REPO, github.sha) }}
@@ -52,7 +52,7 @@ jobs:
       - name: Build and push api image
         uses: docker/build-push-action@v6
         with:
-          context: ./src/deployment/api
+          context: src/deployment/api
           push: true
           tags: |
             ${{ format('ghcr.io/{0}/api:{1}', env.LOWERCASE_REPO, github.sha) }}
