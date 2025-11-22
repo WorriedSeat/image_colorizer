@@ -23,6 +23,8 @@ jobs:
       # 1. Checkout репозитория
       - name: Checkout src
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  
 
       # 2. Set up Docker Buildx (для multi-platform сборки, если нужно)
       - name: Set up Docker Buildx
@@ -46,7 +48,7 @@ jobs:
             ${{ format('ghcr.io/{0}/app:{1}', env.LOWERCASE_REPO, github.sha) }}
             ${{ format('ghcr.io/{0}/app:latest', env.LOWERCASE_REPO) }}
           cache-from: type=gha
-          cache-to: type=gha,mode=max
+          # cache-to: type=gha,mode=max
 
       # 5. Build и push образа для api
       - name: Build and push api image

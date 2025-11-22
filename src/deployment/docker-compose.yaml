@@ -29,7 +29,6 @@ services:
       - network
 
   
-
 networks:
   network:
     driver: bridge
