@@ -6,12 +6,15 @@ services:
     ports:
       - "8000:8000"
     container_name: fastapi
+    volumes:
+      - ../../models:/app/models
+      - ../models:/app/src/models
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
       timeout: 10s
-      retries: 3
+      retries: 20
     networks:
       - network
 
