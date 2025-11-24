@@ -26,8 +26,8 @@ model.eval()  # set to evaluation mode
 to_tensor = transforms.ToTensor()
 
 @app.get("/health")
-def health():
-    return {"status": "ok"}
+async def health_check():
+    return {"status": "healthy", "model_loaded": True}
 
 @app.post("/colorize")
 async def colorize(file: UploadFile = File(...)):
@@ -40,6 +40,9 @@ async def colorize(file: UploadFile = File(...)):
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid image file")
 
+    # --- Resize to 64x64 ---
+    img = img.resize((64, 64), Image.BICUBIC)
+
     # --- Preprocess ---
     img_tensor = to_tensor(img).unsqueeze(0)  # [1,1,H,W]
 
@@ -48,16 +51,14 @@ async def colorize(file: UploadFile = File(...)):
         ab_tensor = model(img_tensor)  # [1,2,H,W]
 
     # --- Convert L+ab to RGB ---
-    # Squeeze batch and channel dimensions
     L = img_tensor.squeeze(0).squeeze(0).numpy() * 100        # [H,W]
     ab = ab_tensor.squeeze(0).permute(1, 2, 0).numpy() * 128  # [H,W,2]
 
-    # Ensure shapes match
     if L.shape != ab.shape[:2]:
         ab = resize(ab, (L.shape[0], L.shape[1]), preserve_range=True)
 
-    lab = np.concatenate([L[:, :, np.newaxis], ab], axis=2)  # [H,W,3]
-    rgb = color.lab2rgb(lab)  # returns [0,1]
+    lab = np.concatenate([L[:, :, np.newaxis], ab], axis=2)
+    rgb = color.lab2rgb(lab)
 
     colorized_img = Image.fromarray((rgb * 255).astype("uint8"))
 
@@ -66,3 +67,4 @@ async def colorize(file: UploadFile = File(...)):
     colorized_img.save(buf, format="PNG")
     buf.seek(0)
     return StreamingResponse(buf, media_type="image/png")
+    

@@ -1,6 +1,24 @@
 version: '3.8'
 
 services:
+  api:
+    image: ghcr.io/worriedseat/image_colorizer/api:latest
+    ports:
+      - "8000:8000"
+    container_name: fastapi
+    volumes:
+      - ../../models:/app/models
+      - ../models:/app/src/models
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 20
+    networks:
+      - network
+
+      
   app:
     image: ghcr.io/worriedseat/image_colorizer/app:latest
     ports:
@@ -8,11 +26,12 @@ services:
     container_name: streamlit
     restart: unless-stopped
     depends_on:
-      - api
+      api:
+        condition: service_healthy
+    networks:
+      - network
 
-  api:
-    image: ghcr.io/worriedseat/image_colorizer/api:latest
-    ports:
-      - "8000:8000"
-    container_name: fastapi
-    restart: unless-stopped
+  
+networks:
+  network:
+    driver: bridge

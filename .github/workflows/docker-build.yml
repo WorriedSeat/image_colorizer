@@ -40,7 +40,7 @@ jobs:
       - name: Build and push app image
         uses: docker/build-push-action@v6
         with:
-          context: ./src/deployment/app
+          context: src/deployment/app
           push: true
           tags: |
             ${{ format('ghcr.io/{0}/app:{1}', env.LOWERCASE_REPO, github.sha) }}
@@ -52,7 +52,7 @@ jobs:
       - name: Build and push api image
         uses: docker/build-push-action@v6
         with:
-          context: ./src/deployment/api
+          context: src/deployment/api
           push: true
           tags: |
             ${{ format('ghcr.io/{0}/api:{1}', env.LOWERCASE_REPO, github.sha) }}
@@ -69,7 +69,7 @@ jobs:
           # Ждём запуска (пример: 30 сек, подстрой под свои сервисы)
           sleep 30
           # Тест доступности (пример: curl на порты)
-          docker run --rm --network container:myapp-container appropriate/curl -s --retry 5 http://localhost:5000 || echo "App test failed"
+          docker run --rm --network container:myapp-container appropriate/curl -s --retry 5 http://localhost:8051 || echo "App test failed"
           docker run --rm --network container:myapi-container appropriate/curl -s --retry 5 http://localhost:8000 || echo "API test failed"
           # Остановка
           docker compose down -v
