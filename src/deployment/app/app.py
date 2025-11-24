@@ -12,7 +12,6 @@ uploaded_file = st.file_uploader("Upload a grayscale image", type=["png", "jpg",
 
 if uploaded_file:
     image = Image.open(uploaded_file)
-    st.image(image, caption="Original image", use_column_width=True)
 
     if st.button("Colorize"):
         with st.spinner("Processing..."):
@@ -25,8 +24,15 @@ if uploaded_file:
 
             if response.status_code == 200:
                 colorized_img = Image.open(io.BytesIO(response.content))
-                st.image(colorized_img, caption="Colorized image", use_column_width=True)
+                
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.image(image, caption="Original image", use_container_width=True)
+                with col2:
+                    st.image(colorized_img, caption="Colorized image", use_container_width=True)
             else:
                 st.error(f"Server error: {response.status_code}")
+    else:
+        st.image(image, caption="Original image", use_container_width=True)
 else:
     st.info("Upload a grayscale image to begin.")
